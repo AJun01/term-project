@@ -1,12 +1,20 @@
 export async function getWeather(zip: string, countryCode: string) {
-    const res = await fetch('http://localhost:3000/api/weather', {
+  try {
+    const res = await fetch('/api/weather-route', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ zip, countryCode }),
-      cache: 'no-store',
-    })
-  
-    if (!res.ok) throw new Error('Failed to fetch weather')
-    return res.json()
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.message || 'Failed to fetch weather data');
+    }
+
+    return await res.json();
+  } catch (err: any) {
+    throw new Error(err.message);
   }
-  
+}
