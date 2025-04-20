@@ -1,5 +1,7 @@
 "use server";
 import { NextRequest, NextResponse } from 'next/server';
+import { storeWeather } from '@/app/lib/store-weather';
+import { Romanesco } from 'next/font/google';
 
 const apiKey = process.env.OPENWEATHER_API_KEY;
 console.log("Weather API route loaded");
@@ -20,6 +22,10 @@ export async function POST(req: NextRequest) {
     const data = await res.json();
 
     if (!res.ok) throw new Error(data.message || 'API error');
+
+    const mongoResult = await storeWeather(zip, countryCode, data);
+
+    if (!mongoResult.ok) throw new Error(mongoResult.error);
 
     return NextResponse.json(data, {
       headers: {
