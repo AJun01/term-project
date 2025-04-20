@@ -14,23 +14,30 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const res = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?zip=${zip},${countryCode}&appid=${apiKey}`
-    );
-    const data = await res.json();
-
-    if (!res.ok) throw new Error(data.message || 'API error');
-
+    // we need to get the lat and lon from api first 
+    const geoUrl = `http://api.openweathermap.org/geo/1.0/zip?zip=${zip},${countryCode}&appid=${apiKey}`  
+    const geoRes = await fetch(geoUrl)  
+    if (!geoRes.ok)  
+      return NextResponse.json({ message: 'geo not found' }, { status: geoRes.status })  
+    const { lat, lon } = await geoRes.json()  
+  
+    // and use it with the weather api because that is the current working one 
+    const weatherUrl =  
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`  
+    const res = await fetch(weatherUrl)  
+    const data = await res.json()  
+    if (!res.ok) throw new Error(data.message || 'weather api error')  
+  
     return NextResponse.json(data, {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',
       },
-    });
+    })
   } catch (err: any) {
     return NextResponse.json(
       { message: err.message },
       { status: 500 }
-    );
+    )
   }
 };
