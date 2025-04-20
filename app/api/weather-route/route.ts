@@ -1,6 +1,6 @@
 "use server";
 import { NextRequest, NextResponse } from 'next/server';
-import { storeWeather } from '@/app/lib/store-weather';
+import { storeWeather } from '@/app/lib/CRUD-weather';
 import { Romanesco } from 'next/font/google';
 
 const apiKey = process.env.OPENWEATHER_API_KEY;
