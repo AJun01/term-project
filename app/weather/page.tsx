@@ -2,6 +2,7 @@
 
 import { getWeather } from '../lib/weather-handle'
 import { useState } from 'react'
+import Result from '../components/Result'
 
 export default function WeatherPage() {
 
@@ -35,13 +36,7 @@ export default function WeatherPage() {
   
         {error && <p className="text-red-500 mt-4">{error}</p>}
   
-        {result && (
-          <div className="mt-6 border p-4 rounded bg-gray-100">
-            <h2 className="font-semibold text-lg">{result.name}</h2>
-            <p>Temperature: {result.main.temp}°K</p>
-            <p>Weather: {result.weather[0].description}</p>
-          </div>
-        )}
+        {result && <Result data={result} />}
       </main>
     )
 }
