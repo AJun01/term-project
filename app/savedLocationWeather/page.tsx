@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 export default function SavedLocationsWeatherPage() {
-  const [locations, setLocations] = useState<{ zip: string; countryCode: string }[]>([])
+  const [locations, setLocations] = useState<{ _id: string; zip: string; countryCode: string }[]>([])
   const [weatherData, setWeatherData] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [zipInput, setZipInput] = useState('')
@@ -69,7 +69,23 @@ export default function SavedLocationsWeatherPage() {
       </main>
     )
   }
-
+  async function handleDelete(id: string) {
+    if (!confirm('Are you sure you want to delete this location?')) return;
+  
+    try {
+      await fetch('/api/save-route', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id }),
+      });
+  
+      // Refresh locations and weather data after delete
+      fetchAllLocationsAndWeather();
+    } catch (error) {
+      console.error('Error deleting location:', error);
+    }
+  }
+  
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-900 to-slate-800 text-white px-6 py-10 pb-24">
       <h1 className="text-3xl font-bold text-center mb-6">Saved Locations Weather</h1>
@@ -101,11 +117,19 @@ export default function SavedLocationsWeatherPage() {
       {/* Weather Cards */}
       <div className="space-y-6 max-w-2xl mx-auto">
         {weatherData.map((weather, index) => (
-          <div key={index} className="rounded-2xl bg-white/10 backdrop-blur-md p-6 shadow-md border border-white/20">
-            <h2 className="text-2xl font-semibold mb-2">{weather.name}, {weather.sys.country}</h2>
-            <p className="text-gray-300">Temperature: {(weather.main.temp - 273.15).toFixed(2)}°C</p>
-            <p className="text-gray-400">Condition: {weather.weather?.[0]?.description}</p>
-          </div>
+          <div key={index} className="relative rounded-2xl bg-white/10 backdrop-blur-md p-6 shadow-md border border-white/20">
+          <button
+            onClick={() => handleDelete(locations[index]._id)}
+            className="absolute top-2 right-2 text-red-400 hover:text-red-600 text-xl"
+            title="Delete Location"
+          >
+            Remove this location
+          </button>
+          <h2 className="text-2xl font-semibold mb-2">{weather.name}, {weather.sys.country}</h2>
+          <p className="text-gray-300">Temperature: {(weather.main.temp - 273.15).toFixed(2)}°C</p>
+          <p className="text-gray-400">Condition: {weather.weather?.[0]?.description}</p>
+        </div>
+        
         ))}
       </div>
     </main>
