@@ -4,8 +4,7 @@ import WeatherInfo from "../WeatherInfo";
 export default function Mist({ data }: { data: any }) {
     return (
       <div
-        className="h-screen bg-cover bg-center text-white p-6"
-        style={{ backgroundImage: "url('/images/mist.jpg')" }}
+        className="min-h-screen bg-cover bg-center text-white p-6"
       >
         <h2 className="text-3xl font-bold">Misty</h2>
         <WeatherInfo data={data} />
