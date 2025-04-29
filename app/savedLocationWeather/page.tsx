@@ -1,8 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useWeatherBackground } from '@/app/lib/useWeatherbg'
-
 
 export default function SavedLocationsWeatherPage() {
   const [locations, setLocations] = useState<{ _id: string; zip: string; countryCode: string }[]>([])
@@ -119,17 +117,9 @@ export default function SavedLocationsWeatherPage() {
       {/* Weather Cards */}
       <div className="space-y-6 max-w-2xl mx-auto">
       {weatherData.map((weather, index) => {
-        const weatherToImage = {
-          Clear: '/Images/clear.jpg',
-          Clouds: '/Images/clouds.jpg',
-          Mist: '/Images/mist.jpg',
-          Rain: '/Images/rain.jpg',
-          Snow: '/Images/snow.jpg',
-          Windy: '/Images/windy.jpg',
-        }
-
-        const main = weather.weather?.[0]?.main
-        const bg = weatherToImage[main] || '/Images/clear.jpg'
+        const main = weather.weather?.[0]?.main || 'Clear'
+        const allowedWeather = ['Clear', 'Clouds', 'Mist', 'Rain', 'Snow', 'Windy'] as const
+        const bg = allowedWeather.includes(main) ? `/Images/${main}.jpg` : '/Images/clear.jpg'
 
         return (
           <div
