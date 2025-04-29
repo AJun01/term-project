@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useWeatherBackground } from '@/app/lib/useWeatherbg'
+
 
 export default function SavedLocationsWeatherPage() {
   const [locations, setLocations] = useState<{ _id: string; zip: string; countryCode: string }[]>([])
@@ -116,21 +118,39 @@ export default function SavedLocationsWeatherPage() {
 
       {/* Weather Cards */}
       <div className="space-y-6 max-w-2xl mx-auto">
-        {weatherData.map((weather, index) => (
-          <div key={index} className="relative rounded-2xl bg-white/10 backdrop-blur-md p-6 shadow-md border border-white/20">
-          <button
-            onClick={() => handleDelete(locations[index]._id)}
-            className="absolute top-2 right-2 text-red-400 hover:text-red-600 text-xl"
-            title="Delete Location"
+      {weatherData.map((weather, index) => {
+        const weatherToImage = {
+          Clear: '/Images/clear.jpg',
+          Clouds: '/Images/clouds.jpg',
+          Mist: '/Images/mist.jpg',
+          Rain: '/Images/rain.jpg',
+          Snow: '/Images/snow.jpg',
+          Windy: '/Images/windy.jpg',
+        }
+
+        const main = weather.weather?.[0]?.main
+        const bg = weatherToImage[main] || '/Images/clear.jpg'
+
+        return (
+          <div
+            key={index}
+            className="relative rounded-2xl bg-contain bg-repeat p-6 text-white shadow-md border border-white/20"
+            style={{ backgroundImage: `url(${bg})` }}
           >
-            Remove this location
-          </button>
-          <h2 className="text-2xl font-semibold mb-2">{weather.name}, {weather.sys.country}</h2>
-          <p className="text-gray-300">Temperature: {(weather.main.temp - 273.15).toFixed(2)}°C</p>
-          <p className="text-gray-400">Condition: {weather.weather?.[0]?.description}</p>
-        </div>
+            <button
+              onClick={() => handleDelete(locations[index]._id)}
+              className="absolute top-2 right-2 text-red-400 hover:text-red-600 text-xl"
+              title="Delete Location"
+            >
+              Remove this location
+            </button>
+            <h2 className="text-2xl font-semibold mb-2">{weather.name}, {weather.sys.country}</h2>
+            <p className="text-white">Temperature: {(weather.main.temp - 273.15).toFixed(2)}°C</p>
+            <p className="text-white">Condition: {weather.weather?.[0]?.description}</p>
+          </div>
+        )
+      })}
         
-        ))}
       </div>
     </main>
   )
