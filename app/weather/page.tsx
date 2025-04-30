@@ -25,6 +25,7 @@ export default function WeatherPage() {
       }
     }
   
+    //added tailwind css: Yujun Liu
     return (
         <main className="max-w-lg mx-auto py-16 px-8 flex flex-col items-center bg-gray-900 rounded-xl mt-16">
           <h1 className="text-3xl font-bold text-white mb-6 text-center">

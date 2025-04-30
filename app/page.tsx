@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 
+/// Tailwind CSS styles and three gifs that playing in order for the page: Yujun Liu
 const gifs = [
   "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMWoyMnRjbzM4M3BlMGNsdzlxaWM1MGdzYjJxODVsNTVudHd0bXpndCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LbR0KKRuoNyXRf6aOi/giphy.gif",
   "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMGRjdHF1aHA0ZThkYTVycnprZnB2Z3BoOW04cXVmaXdzbjRpMmN2bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/2HekEhPmv9yn0qzont/giphy.gif",
@@ -10,15 +11,18 @@ const gifs = [
 ]
 
 export default function Home() {
+  //useState to control the gif playing: Yujun Liu
   const [currentGif, setCurrentGif] = useState(0)
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentGif((prev) => (prev + 1) % gifs.length)
+      //clear the interval after 1450ms: Yujun Liu
     }, 1450) 
     return () => clearInterval(interval)
   }, [])
 
+  //nice tailwind css: Yujun Liu
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 p-6">
     <h1 className="text-6xl font-extrabold text-blue-700 mb-8 drop-shadow-md">Weather App</h1>
