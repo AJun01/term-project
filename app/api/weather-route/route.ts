@@ -14,14 +14,14 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    // we need to get the lat and lon from api first 
+    // we need to get the lat and lon from api first : Yujun Liu
     const geoUrl = `http://api.openweathermap.org/geo/1.0/zip?zip=${zip},${countryCode}&appid=${apiKey}`  
     const geoRes = await fetch(geoUrl)  
     if (!geoRes.ok)  
       return NextResponse.json({ message: 'geo not found' }, { status: geoRes.status })  
     const { lat, lon } = await geoRes.json()  
   
-    // and use it with the weather api because that is the current working one 
+    // and use it with the weather api because that is the current working one: Yujun Liu
     const weatherUrl =  
       `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`  
     const res = await fetch(weatherUrl)  

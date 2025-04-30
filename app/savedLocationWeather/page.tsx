@@ -117,6 +117,7 @@ export default function SavedLocationsWeatherPage() {
       {/* Weather Cards */}
       <div className="space-y-6 max-w-2xl mx-auto">
       {weatherData.map((weather, index) => {
+        //here are the logic to get the background image based on the weather condition dynamically: Yujun Liu
         const main = weather.weather?.[0]?.main || 'Clear'
         const allowedWeather = ['Clear', 'Clouds', 'Mist', 'Rain', 'Snow', 'Windy'] as const
         const bg = allowedWeather.includes(main) ? `/Images/${main}.jpg` : '/Images/clear.jpg'
