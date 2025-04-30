@@ -1,8 +1,16 @@
+
+// Author:Kavya Verma
+// Displays all saved locations weather cards, 
+// allows users to add and delete locations connected to MongoDB, 
+// fetches live weather data using OpenWeatherMap API. 
+// Built with TailwindCSS and mobile-first responsive design.
+
 'use client'
 
 import { useEffect, useState } from 'react'
 
 export default function SavedLocationsWeatherPage() {
+  // State variables for locations, weather data, input form, and loading state
   const [locations, setLocations] = useState<{ _id: string; zip: string; countryCode: string }[]>([])
   const [weatherData, setWeatherData] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -13,6 +21,7 @@ export default function SavedLocationsWeatherPage() {
     fetchAllLocationsAndWeather()
   }, [])
 
+// Fetching all saved locations from the API and retrieves live weather data for each
   async function fetchAllLocationsAndWeather() {
     try {
       setLoading(true)
@@ -39,6 +48,7 @@ export default function SavedLocationsWeatherPage() {
     }
   }
 
+  //Submits a new location to the API and reloads the page with new data
   async function handleAddLocation(e: React.FormEvent) {
     e.preventDefault()
 
@@ -69,6 +79,7 @@ export default function SavedLocationsWeatherPage() {
       </main>
     )
   }
+  //sends a delete request to remove a saved location from MongoDB and also updates the UI
   async function handleDelete(id: string) {
     if (!confirm('Are you sure you want to delete this location?')) return;
   
@@ -85,7 +96,7 @@ export default function SavedLocationsWeatherPage() {
       console.error('Error deleting location:', error);
     }
   }
-  
+  //page layout
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-900 to-slate-800 text-white px-6 py-10 pb-24">
       <h1 className="text-3xl font-bold text-center mb-6">Saved Locations Weather</h1>
@@ -121,7 +132,8 @@ export default function SavedLocationsWeatherPage() {
         const main = weather.weather?.[0]?.main || 'Clear'
         const allowedWeather = ['Clear', 'Clouds', 'Mist', 'Rain', 'Snow', 'Windy'] as const
         const bg = allowedWeather.includes(main) ? `/Images/${main}.jpg` : '/Images/clear.jpg'
-
+        
+        //rendering cards for each saved location with its weather data
         return (
           <div
             key={index}
@@ -133,7 +145,7 @@ export default function SavedLocationsWeatherPage() {
               className="absolute top-2 right-2 text-red-400 hover:text-red-600 text-xl"
               title="Delete Location"
             >
-              Remove this location
+              Remove ✖
             </button>
             <h2 className="text-2xl font-semibold mb-2">{weather.name}, {weather.sys.country}</h2>
             <p className="text-white">Temperature: {(weather.main.temp - 273.15).toFixed(2)}°C</p>
