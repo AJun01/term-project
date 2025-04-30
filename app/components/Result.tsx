@@ -1,3 +1,9 @@
+/* 
+Daryl Young
+could have use a switch statement but I thought this was easier to comprehend. 
+*/
+
+
 import Clear from './conditions/Clear'
 import Clouds from './conditions/Clouds'
 import Snow from './conditions/Snow'

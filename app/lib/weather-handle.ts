@@ -1,3 +1,9 @@
+/*
+Daryl Young
+
+the code below is similar to other lib files acting as a bridge between the client and server.
+*/
+
 export async function getWeather(zip: string, countryCode: string) {
   try {
     const res = await fetch('/api/weather-route', {

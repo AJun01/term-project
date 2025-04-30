@@ -1,3 +1,9 @@
+/* 
+Daryl Young
+
+I kept the interface and the function together due to issues I was having earlier in the project and having to rework the way temp and condition were being passed to the function.
+*/
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -10,7 +16,7 @@ interface WeatherAdviceProps {
 
 export default function WeatherAdvice({ tempC, condition }: WeatherAdviceProps) {
   const [advice, setAdvice] = useState<string>("");
-
+// I use the useEffect hook to fetch the advice from the API when the component mounts or when tempC or condition changes. felt it was the best way to do it since the data is being passed from the WeatherDetails component to this component.
   useEffect(() => {
     const messages = [
       {

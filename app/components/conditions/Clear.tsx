@@ -1,3 +1,10 @@
+/*
+Daryl Young
+I use DRY to make sure I wasn't use redundant code and to make it easier to read and understand so weatherInfo is a part of all condition components.
+
+*/
+
+
 import WeatherInfo from "../WeatherInfo";
 
 
