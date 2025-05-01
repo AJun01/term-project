@@ -1,5 +1,6 @@
 'use client'
 
+
 import { getWeather } from '../lib/weather-handle'
 import { useState } from 'react'
 import Result from '../components/Result'

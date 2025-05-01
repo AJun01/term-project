@@ -1,6 +1,10 @@
 "use server";
 import { NextRequest, NextResponse } from 'next/server';
 
+/*
+Yujun Liu
+weather API route that takes zip and countryCode as input and returns the weather data for that location using openweathermap API
+*/
 const apiKey = process.env.OPENWEATHER_API_KEY;
 console.log("Weather API route loaded");
 export async function POST(req: NextRequest) {

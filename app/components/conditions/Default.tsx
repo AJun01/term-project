@@ -1,6 +1,5 @@
 import WeatherInfo from "../WeatherInfo";
 
-
 export default function Default({ data }: { data: any }) {
     return (
       <div

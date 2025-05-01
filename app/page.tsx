@@ -1,5 +1,11 @@
 'use client'
 
+/*
+Yujun Liu
+this is the main page for the weather app, but implementing client in this page is not the best practice since it is the page under app,
+ and it will add extra load to the server since it is a small scale app it is a really quick solution.
+*/
+
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 

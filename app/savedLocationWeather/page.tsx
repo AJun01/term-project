@@ -125,6 +125,9 @@ export default function SavedLocationsWeatherPage() {
         </button>
       </form>
 
+      {/* Yujun Liu: 
+      to improve performance, we could upload the jpgs to cloud storage service like AWS S3, which reducing load times instead of save them in the server*/}
+
       {/* Weather Cards */}
       <div className="space-y-6 max-w-2xl mx-auto">
       {weatherData.map((weather, index) => {
